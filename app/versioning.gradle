@@ -1,0 +1,5 @@
+ext.generateBuildVersion = {
+    def date = new Date()
+    def formattedDate = date.format('yyyyMMddHHmm').substring(0, 11).substring(2)
+    return formattedDate.toInteger()
+}
