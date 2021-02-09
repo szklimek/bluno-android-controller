@@ -1,9 +1,11 @@
 package com.szklimek.bluno.core
 
+/**
+ * Helper class to provide more information in logs
+ */
 object Log {
 
-    private const val TAG = "DietApp"
-    var remoteLogger: RemoteLogger? = null
+    private const val TAG = "BlunoApp"
 
     private val lineNumber: Int
         get() = runCatching { Thread.currentThread().stackTrace[6].lineNumber }.getOrDefault(-1)
@@ -17,41 +19,32 @@ object Log {
     private val currentThread: String
         get() = Thread.currentThread().name
 
-    fun i(message: String, remote: Boolean = false) {
+    fun i(message: String) {
         val logMessage = getLogMessage(message)
         android.util.Log.i(TAG, logMessage)
-        if (remote) remoteLogger?.logMessage("i", logMessage)
     }
 
-    fun v(message: String, remote: Boolean = false) {
+    fun v(message: String) {
         val logMessage = getLogMessage(message)
         android.util.Log.v(TAG, logMessage)
-        if (remote) remoteLogger?.logMessage("v", logMessage)
     }
 
-    fun d(message: String, remote: Boolean = false) {
+    fun d(message: String) {
         val logMessage = getLogMessage(message)
         android.util.Log.d(TAG, logMessage)
-        if (remote) remoteLogger?.logMessage("d", logMessage)
     }
 
-    fun w(message: String, remote: Boolean = false) {
+    fun w(message: String) {
         val logMessage = getLogMessage(message)
         android.util.Log.w(TAG, logMessage)
-        if (remote) remoteLogger?.logMessage("w", logMessage)
     }
 
-    fun e(message: String, remote: Boolean = false) {
+    fun e(message: String) {
         val logMessage = getLogMessage(message)
         android.util.Log.e(TAG, logMessage)
-        if (remote) remoteLogger?.logMessage("e", logMessage)
     }
 
     private fun getLogMessage(message: String): String {
         return "($fileName:$lineNumber) $methodName @$currentThread $message"
     }
-}
-
-interface RemoteLogger {
-    fun logMessage(level: String, message: String)
 }
